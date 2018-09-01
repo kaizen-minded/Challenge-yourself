@@ -1,0 +1,54 @@
+* {
+    font-family: "lato", sans-serif;
+    font-weight: bold;
+}
+
+body {
+    background: rgb(245, 245, 245);
+    color: #333333;
+    margin-top: 20px;
+}
+
+.container {
+    display: block;
+    width: 400px;
+    margin: 0 auto;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.green{
+    background: rgb(80, 133, 0);
+}
+
+.red{
+    background: red;
+    width: 25%;
+}
+
+.blue{
+    background: blue;
+    width: 70%;
+}
+
+.red, .blue{
+    display: inline-block;
+    height: 500px;
+}
+
+.overflow{
+    overflow: hidden;
+}
+ul{
+    padding: 0;
+}
+.challenge-button li{
+    border: 1px solid black;
+    margin: 5px;
+    background: white;
+    padding: 5px;
+    list-style-type: none;
+}
