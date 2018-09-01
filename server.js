@@ -12,39 +12,30 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(jsonParser);
 app.use(express.static("public"));
-// app.use('/challenges', challengesRouter);
 
-app.use('/challenges', routes);
+app.use('/', routes);
 
 let db = mongoose.connection;
 
-app.get('/', (req, res) => {
-    res.render('index', {task: task, complete: complete});
-});
-
-let task = ['Study Node.js', 'Build UI']
-
-app.post('/addtask', (req, res) => {
-    let newTask = req.body.newTask;
-    task.push(newTask);
-    res.redirect('/');
-});
+// app.post('/addtask', (req, res) => {
+//     let newTask = req.body.newTask;
+//     task.push(newTask);
+//     res.redirect('/');
+// });
  
-let complete = ["finish jQuery"];
-
-app.post("/removetask", (req, res) => {
-    let completeTask = req.body.check;
-    if (typeof completeTask === 'string'){
-        complete.push(completeTask);
-        task.splice(task.indexOf(completeTask), 1);
-    } else if (typeof completeTask === "object"){
-        for (let i = 0; i < completeTask.length; i++){
-            complete.push(completeTask[i]);
-            task.splice(task.indexOf(completeTask[i]), 1);
-        }
-    }
-    res.redirect('/');
-});
+// app.post("/removetask", (req, res) => {
+//     let completeTask = req.body.check;
+//     if (typeof completeTask === 'string'){
+//         complete.push(completeTask);
+//         task.splice(task.indexOf(completeTask), 1);
+//     } else if (typeof completeTask === "object"){
+//         for (let i = 0; i < completeTask.length; i++){
+//             complete.push(completeTask[i]);
+//             task.splice(task.indexOf(completeTask[i]), 1);
+//         }
+//     }
+//     res.redirect('/');
+// });
 
 app.get('/api/todos', (req, res) => {
     Todo.getTodos(function(err, todos){
