@@ -17,11 +17,14 @@ const challengeSchema = mongoose.Schema({
             default: Date.now
         },
         deadline: Date,
-        completed: Boolean
+        completed: {
+            type: Boolean,
+            default: false
+        }
     }]
 
 })
 
-challengeSchema = mongoose.model('Challenge', challengeSchema);
+const Challenge = mongoose.model('Challenge', challengeSchema);
 
-module.exports ={ challengeSchema }
+module.exports ={ Challenge }

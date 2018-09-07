@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <%include ./partials/head %>
+</head>
+<body>
+   <header>
+        <%include ./partials/header %>
+    </header>
+   <div class="row">
+       <main class="blue overflow">
+           <h2>The Challenge is to <%= challengeFinder.name %></h2>
+           <h2>Add a New Task</h2>
+           <form action="/challenges/addtask/<%= challengeFinder._id %>" method="POST">
+               <div>
+                   <label for="name">Name</label>
+                   <input type="text" id="name" name="name">
+               </div>
+               <div>
+                   <label for="task-start-date">Start Date</label>
+                   <input type="date" id="task-start-date" name="startDate">
+               </div>
+               <div>
+                   <label for="task-deadline">Deadline</label>
+                   <input type="date" id="task-deadline" name="deadline">
+               </div> 
+                    <input type="hidden" name="" id="">
+               <button type="submit">Submit</button>   
+           </form>
+
+           <div class="row">
+               <% for( let i = 0; i < challengeFinder.tasks.length; i++) { %>
+                    <div>
+                            <h3> <%= challengeFinder.tasks[i].name %></h3>
+                            <h3> <%= challengeFinder.tasks[i].start.toDateString() %></h3>
+                            <h3> <%= challengeFinder.tasks[i].deadline %></h3>
+                            <h3> Task Completed: <%= challengeFinder.tasks[i].completed %></h3>
+
+                            <button id="<%= challengeFinder.tasks[i]._id %>">Completed</button>
+                    </div>
+                    
+                <% } %>
+           </div>
+           <!-- <div>
+               <h3><%= challengeFinder.tasks[0].name %></h3>
+           </div> -->
+
+       </main>
+       <aside class="red overflow">
+            <h3>Your CHALLENGES:</h3>
+            <% for( let i = 0;  i < data.length; i++){ %>
+                <div>
+                    <a href="/challenges/<%=data[i]._id %>"><%= data[i].name %></a>
+                </div>
+            <% } %>
+        </aside>
+   </div>
+   <%include ./partials/scripts %>
+</body>
+</html>

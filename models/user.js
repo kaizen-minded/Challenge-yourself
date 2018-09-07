@@ -9,9 +9,8 @@ const userSchema = mongoose.Schema({
         type: String,
         unique: true
     }
-
 })
 
-userSchema = mongoose.model('User', challengeSchema);
+User = mongoose.model('User', userSchema);
 
-module.exports ={ userSchema }
+module.exports ={ User }

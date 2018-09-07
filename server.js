@@ -1,50 +1,34 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
-const Todo = require("./models/todo");
+// const Todo = require("./models/todo");
 const jsonParser = bodyParser.json();
-const routes = require('./routes/challengesRouter')
+const challengesRoutes = require('./routes/challengesRouter');
+const userRoutes = require ('./routes/userRouter');
 const { DATABASE_URL, PORT } = require('./config');
 const app = express();
 
-app.set('view engine', 'ejs');
+mongoose.Promise = global.Promise;
+
+// app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(jsonParser);
 app.use(express.static("public"));
 
-app.use('/', routes);
+app.use('/', userRoutes);
+app.use('/challenges', challengesRoutes);
 
 let db = mongoose.connection;
 
-// app.post('/addtask', (req, res) => {
-//     let newTask = req.body.newTask;
-//     task.push(newTask);
-//     res.redirect('/');
-// });
- 
-// app.post("/removetask", (req, res) => {
-//     let completeTask = req.body.check;
-//     if (typeof completeTask === 'string'){
-//         complete.push(completeTask);
-//         task.splice(task.indexOf(completeTask), 1);
-//     } else if (typeof completeTask === "object"){
-//         for (let i = 0; i < completeTask.length; i++){
-//             complete.push(completeTask[i]);
-//             task.splice(task.indexOf(completeTask[i]), 1);
+// app.get('/api/todos', (req, res) => {
+//     Todo.getTodos(function(err, todos){
+//         if(err){
+//             throw err;
 //         }
-//     }
-//     res.redirect('/');
+//         res.json({todos});
+//     })
 // });
-
-app.get('/api/todos', (req, res) => {
-    Todo.getTodos(function(err, todos){
-        if(err){
-            throw err;
-        }
-        res.json({todos});
-    })
-});
 
 function runServer(){
     return new Promise((resolve, reject) =>{
