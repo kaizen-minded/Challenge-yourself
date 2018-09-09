@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
-// const Todo = require("./models/todo");
 const jsonParser = bodyParser.json();
 const challengesRoutes = require('./routes/challengesRouter');
 const userRoutes = require ('./routes/userRouter');
@@ -10,25 +9,15 @@ const app = express();
 
 mongoose.Promise = global.Promise;
 
-// app.set('view engine', 'ejs');
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(jsonParser);
 app.use(express.static("public"));
 
 app.use('/', userRoutes);
 app.use('/challenges', challengesRoutes);
-
-let db = mongoose.connection;
-
-// app.get('/api/todos', (req, res) => {
-//     Todo.getTodos(function(err, todos){
-//         if(err){
-//             throw err;
-//         }
-//         res.json({todos});
-//     })
-// });
+app.use(function (err, req, res, next) {
+    console.log(err);
+})
 
 function runServer(){
     return new Promise((resolve, reject) =>{

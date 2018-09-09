@@ -36,14 +36,12 @@
                             <h3> <%= challengeFinder.tasks[i].deadline %></h3>
                             <h3> Task Completed: <%= challengeFinder.tasks[i].completed %></h3>
 
-                            <button id="<%= challengeFinder.tasks[i]._id %>">Completed</button>
+                            <button class="completed" data-id="<%= challengeFinder.tasks[i]._id %>" data-completed="<%= !(challengeFinder.tasks[i].completed) %>">Completed</button>
+                            <button class="delete-task" data-id="<%= challengeFinder.tasks[i]._id %>">Delete</button>
                     </div>
                     
                 <% } %>
            </div>
-           <!-- <div>
-               <h3><%= challengeFinder.tasks[0].name %></h3>
-           </div> -->
 
        </main>
        <aside class="red overflow">
