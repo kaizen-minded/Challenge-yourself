@@ -8,10 +8,11 @@
         <%include ./partials/header %>
     </header>
    <div class="row">
-       <main class="blue overflow">
-           <h2>The Challenge is to <%= challengeFinder.name %></h2>
+       <main class="col-6">
+           <h2>The Challenge is to <%= challenge.name %></h2>
+           
            <h2>Add a New Task</h2>
-           <form action="/challenges/addtask/<%= challengeFinder._id %>" method="POST">
+           <form action="/challenges/addtask/<%= challenge._id %>" method="POST">
                <div>
                    <label for="name">Name</label>
                    <input type="text" id="name" name="name">
@@ -29,28 +30,33 @@
            </form>
 
            <div class="row">
-               <% for( let i = 0; i < challengeFinder.tasks.length; i++) { %>
+               <% if ( challenge.tasks.length >= 1) { %>
+               <% for( let i = 0; i < challenge.tasks.length; i++) { %>
                     <div>
-                            <h3> <%= challengeFinder.tasks[i].name %></h3>
-                            <h3> <%= challengeFinder.tasks[i].start.toDateString() %></h3>
-                            <h3> <%= challengeFinder.tasks[i].deadline %></h3>
-                            <h3> Task Completed: <%= challengeFinder.tasks[i].completed %></h3>
+                            <h3> <%= challenge.tasks[i].name %></h3>
+                            <h3> <%= challenge.tasks[i].start.toDateString() %></h3>
+                            <h3> <%= challenge.tasks[i].deadline %></h3>
+                            <h3> Task Completed: <%= challenge.tasks[i].completed %></h3>
 
-                            <button class="completed" data-id="<%= challengeFinder.tasks[i]._id %>" data-completed="<%= !(challengeFinder.tasks[i].completed) %>">Completed</button>
-                            <button class="delete-task" data-id="<%= challengeFinder.tasks[i]._id %>">Delete</button>
+                            <button class="completed" data-id="<%= challenge.tasks[i]._id %>" data-completed="<%= !(challenge.tasks[i].completed) %>">Completed</button>
+                            <button class="delete-task" data-id="<%= challenge.tasks[i]._id %>">Delete</button>
                     </div>
                     
+                <% } %>
+                <% } else { %>
+                    <p>Add Your First Task</p>
                 <% } %>
            </div>
 
        </main>
-       <aside class="red overflow">
-            <h3>Your CHALLENGES:</h3>
-            <% for( let i = 0;  i < data.length; i++){ %>
-                <div>
-                    <a href="/challenges/<%=data[i]._id %>"><%= data[i].name %></a>
-                </div>
-            <% } %>
+       <aside class="col-6">
+                <h3>Your CHALLENGES:</h3>
+                <% for( let i = 0;  i < allChallenges.length; i++){ %>
+                    <div>
+                        <a href="/challenges/task/<%=allChallenges[i]._id %>"><%= allChallenges[i].name %></a>
+                        <button class="delete" data-id="<%=allChallenges[i]._id %>">Delete</button>
+                    </div>
+                <% } %>
         </aside>
    </div>
    <%include ./partials/scripts %>
