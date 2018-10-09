@@ -4,7 +4,7 @@
   "description": "Simple Todo app",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 10000"
   },
   "author": "",
   "license": "ISC",
@@ -22,5 +22,12 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "faker": "^4.1.0",
+    "mocha": "^5.2.0",
+    "supertest": "^3.3.0"
   }
 }

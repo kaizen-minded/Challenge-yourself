@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
     ejs.renderFile('views/home.ejs', {loggedIn: false}, function(err, str){
         res.send(str)
     });
+    res.status(200);
 })
 
 // router.get('/dashboard', (req, res) => {
@@ -148,7 +149,9 @@ router.post('/register', (req, res) => {
             });
         })
         .then(user => {
-            return res.sendStatus(201)
+            res.status(201).json(user.serialize());
+
+            
             // .json(user.serialize());
         })
         .catch(err => {
@@ -166,6 +169,7 @@ router.get('/login', (req, res) => {
     ejs.renderFile('views/login.ejs', {loggedIn: false}, function(err, str){
         res.send(str)
     })
+    res.status(200);
 })
 
 router.get('/logout', (req, res) => {

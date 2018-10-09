@@ -30,8 +30,8 @@ $(document).ready(function(){
 
     $(".delete").click(function(e){
         let taskComplete = $(e.currentTarget).data('completed');
-        let taskId = $(e.currentTarget).data('id');
-        fetch(`/challenges/deletechallenge/${taskId}`, 
+        let challengeId = $(e.currentTarget).data('id');
+        fetch(`/challenges/deletechallenge/${challengeId}`, 
         {
             method: 'DELETE'
         })
@@ -61,7 +61,7 @@ $(document).ready(function(){
             console.log({response})
             return response.json()
         }).then(data => {
-                console.log(data);
+                // console.log(data);
                 localStorage.authToken = data.authToken;
                 return window.location.href = `/challenges/${data.id}`
             })

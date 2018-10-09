@@ -21,7 +21,6 @@ router.get('/:id', (req, res) => {
                 options = { hasChallenge: false, username, loggedIn: true }
 
             } else {
-
                 const username = req.user.username;
                 const totalTask = data.reduce((a, v) => {
                     if (typeof a === 'object') return a.tasks.length + v.tasks.length; else return a + v.tasks.length
@@ -29,7 +28,14 @@ router.get('/:id', (req, res) => {
                 const completedTask = data.reduce((a, v) => {
                     if (typeof a === 'object') return a.tasks.filter(t => t.completed).length + v.tasks.filter(t => t.completed).length; else return a + v.tasks.filter(t => t.completed).length
                 });
-                options = { hasChallenge: true, data, username, totalTask, completedTask, loggedIn: true }
+                const progressBar = [];
+                data.forEach(challenge => {
+                    let allTask = challenge.tasks.length;
+                    let jobDone = challenge.tasks.filter(task => task.completed).length;
+                    let progress = jobDone / allTask * 100;
+                    progressBar.push([jobDone, allTask]);
+                })
+                options = { hasChallenge: true, data, username, progressBar, totalTask, completedTask, loggedIn: true }
             }
             ejs.renderFile('views/profile.ejs', options, { cache: true }, function (err, str) {
                 if (str) {
@@ -156,7 +162,7 @@ router.put('/completedTask/:id', (req, res) => {
         // {arrayFilters:  }
     )
         .then(element => {
-            res.redirect(`/challenges/task/${req.params.id}`)})
+            res.json(element)})
         //Challenge.findOne({'tasks._id': task}) // Still working on this use db.getCollection('challenges').find({'tasks._id': ObjectId("5b9081f01421fa3e24ccd56e")})
         //.then(element => console.log(element.tasks.filter(obj => obj._id === "5b9081f01421fa3e24ccd56e" )))
         .catch(err => {
