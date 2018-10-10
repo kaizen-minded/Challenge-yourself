@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    // console.log("CONNECTED TO JQUERY");
     $(".completed").click(function(e){
         let taskComplete = $(e.currentTarget).data('completed');
         let taskId = $(e.currentTarget).data('id');
@@ -45,12 +44,29 @@ $(document).ready(function(){
 
     $("#login-form").submit(function(e){
         e.preventDefault();
-        fetch(`/auth/login`, 
+        login($('#username').val(), $('#password').val())
+    })
+
+    $("#register-form").submit(function(e){
+        e.preventDefault();
+        fetch('/register', {
+            method: 'POST',
+            body:
+
+        }
+           
+        )
+        login($('#username').val(), $('#password').val())
+    })
+})
+
+function login(user, password) {
+    fetch(`/auth/login`, 
         {
             method: 'POST',
             body: JSON.stringify({
-                username: $('#username').val(),
-                password: $('#password').val()
+                username: user,
+                password: password
             }),
             headers: {
                 "content-type": "application/json"
@@ -58,19 +74,12 @@ $(document).ready(function(){
             credentials: "same-origin"
         })
         .then(response => {
-            console.log({response})
             return response.json()
         }).then(data => {
-                // console.log(data);
                 localStorage.authToken = data.authToken;
                 return window.location.href = `/challenges/${data.id}`
             })
             .catch(err => {
                 console.error(err);
             })
-        // })
-        // .catch(err => {
-        //     console.error(err);
-        // })
-    })
-})
+}

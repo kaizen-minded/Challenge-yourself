@@ -106,7 +106,6 @@ describe('User API resource', function () {
         it("should create a new User", function (done) {
             const newUser = generateUserData();
 
-            console.log(newUser)
             request(app)
             .post('/register')
             .type('form')
@@ -121,7 +120,6 @@ describe('User API resource', function () {
             
             User.findOne()
             .then((user) =>{
-                console.log(user);
                 request(app)
                 .post('/auth/login')
                 .type('form')
@@ -141,7 +139,6 @@ describe("Challenge API resources", function(){
         // return seedUserData();
         User.findOne()
         .then((user) =>{
-            console.log(user);
             request(app)
             .post('/auth/login')
             .type('form')

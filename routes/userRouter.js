@@ -55,7 +55,6 @@ router.get('/register', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-    // console.log(req.body);
     const requiredFields = ['username', 'password'];
     const missingField = requiredFields.find(field => !(field in req.body));
     
@@ -139,7 +138,6 @@ router.post('/register', (req, res) => {
             return User.hashPassword(password)
         })
         .then(hash => {
-            // console.log({hash})
             return User.create({
                 username,
                 password: hash,
@@ -150,8 +148,6 @@ router.post('/register', (req, res) => {
         })
         .then(user => {
             res.status(201).json(user.serialize());
-
-            
             // .json(user.serialize());
         })
         .catch(err => {

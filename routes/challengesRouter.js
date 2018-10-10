@@ -9,11 +9,9 @@ const { Task } = require("../models/task");
 const { User } = require("../models/user");
 
 router.get('/:id', (req, res) => {
-    console.log(req.user);
     Challenge.find({
-        userId: req.user.id // change
-        // ,_id: req.params.id
-    }) //this will be req.user.id
+        userId: req.user.id
+    })
         .then(data => {
             const username = req.user.username;
             let options;
@@ -62,16 +60,12 @@ router.post('/addchallenge', (req, res) => {
         deadline: req.body.deadline
     })
         .then(challenge => {
-            // res.status(201);
-            console.log(req.user);
             res.redirect(`/challenges/${req.user.id}`);
         })
         .catch(err => {
             console.error(err);
             res.status(500).json({ message: "Internal Server Error" })
         })
-    //FIX should be redirected to the User profile page
-    // res.redirect('/');
 })
 
 router.delete('/deletechallenge/:id', (req, res) => {
@@ -87,14 +81,12 @@ router.delete('/deletechallenge/:id', (req, res) => {
 })
 
 router.get('/task/:id', (req, res) => {
-    console.log(req.user);
     Challenge.find({
         userId: req.user.id
         // _id: req.params.id
     }) //this will be req.user.id
         .then(allChallenges => {
             challenge = allChallenges.find(c=> c._id.toString() === req.params.id)
-            console.log(challenge);
             let options = {
                 challenge: challenge,
                 allChallenges: allChallenges,
@@ -112,7 +104,6 @@ router.get('/task/:id', (req, res) => {
 
 
 router.post('/addtask/:id', (req, res) => {
-    // console.log(req.body)
     Challenge.findOneAndUpdate({
         userId: req.user.id,
         _id: req.params.id

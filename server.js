@@ -25,14 +25,11 @@ app.use(jsonParser);
 app.use(express.static("public"));
 
 passport.use(localStrategy);
-// passport.use(jwtStrategy);
 passport.serializeUser(function (user, cb) {
-    console.log(user)
     cb(null, user._id);
 });
 
 passport.deserializeUser(function (id, cb) {
-    console.log(id)
     User.findById(id, function (err, user) {
         if (err) { return cb(err); }
         cb(null, user);
