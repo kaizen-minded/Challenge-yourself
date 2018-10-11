@@ -1,11 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ejs = require('ejs');
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
 
-
-const { Challenge } = require("../models/challenge")
 const { User } = require("../models/user")
 
 router.get('/', (req, res) => {
@@ -18,35 +14,6 @@ router.get('/', (req, res) => {
     res.status(200);
 })
 
-// router.get('/dashboard', (req, res) => {
-//     User.findOne({_id: "5b8c1c6137b93b413c777fdc"})
-//     .then(userData => {
-//         Challenge.find({ userId: userData._id }) //this will be req.user.id
-//         .then(data => {
-//             const username = userData.username
-//             const totalTask = data.reduce((a, v) => {
-//                 if (typeof a === 'object') return a.tasks.length + v.tasks.length; else return a + v.tasks.length
-//             })
-//             const completedTask = data.reduce((a, v) => {
-//                 if (typeof a === 'object') return a.tasks.filter(t => t.completed).length + v.tasks.filter(t => t.completed).length; else return a + v.tasks.filter(t => t.completed).length
-//             });
-
-
-//             ejs.renderFile('views/profile.ejs', { data, totalTask, completedTask, username }, { cache: true }, function (err, str) {
-//                 res.send(str)
-//             }) 
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             res.status(500).json({ message: "Internal Server Error" })
-//         })
-//     })
-//     .catch(err => {
-//         console.error(err);
-//         res.status(500).json({ message: "Internal Server Error" })
-//     })
-
-// });
 
 router.get('/register', (req, res) => {
     ejs.renderFile('views/register.ejs',{loggedIn: false}, function(err, str){
@@ -148,7 +115,6 @@ router.post('/register', (req, res) => {
         })
         .then(user => {
             res.status(201).json(user.serialize());
-            // .json(user.serialize());
         })
         .catch(err => {
             console.log(err)

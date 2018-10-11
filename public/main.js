@@ -68,19 +68,6 @@ $(document).ready(function(){
             return window.location.href = `/login`;
         })
     })
-    //     fetch('/register', {
-    //         method: 'POST',
-    //         body: JSON.stringify({
-    //             username: $('#username').val(),
-    //             password: $('#password').val()
-
-    //         })
-    //     })
-    //     .then()
-           
-    //     )
-    //     login($('#username').val(), $('#password').val())
-    // })
 })
 
 function login(user, password) {
