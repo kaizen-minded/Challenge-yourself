@@ -38,6 +38,10 @@ describe('User API resource', function () {
         return runServer(TEST_DATABASE_URL);
     });
 
+    beforeEach(function (){
+        return generateUserData();
+    })
+
     afterEach(function () {
         return tearDownDb();
     });
