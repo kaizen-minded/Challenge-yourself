@@ -3,10 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const ejs = require('ejs');
 
-
 const { Challenge } = require("../models/challenge");
-const { Task } = require("../models/task");
-const { User } = require("../models/user");
+
 
 router.get('/:id', (req, res) => {
     Challenge.find({
@@ -18,14 +16,25 @@ router.get('/:id', (req, res) => {
             if (data.length < 1) {
                 options = { hasChallenge: false, username, loggedIn: true }
 
-            } else {
+            }
+
+            else {
                 const username = req.user.username;
-                const totalTask = data.reduce((a, v) => {
-                    if (typeof a === 'object') return a.tasks.length + v.tasks.length; else return a + v.tasks.length
+                let totalTask = data.reduce((a, v) => {
+                    if (typeof a === 'object') return a.tasks.length + v.tasks.length;
+                    else return a + v.tasks.length
                 })
-                const completedTask = data.reduce((a, v) => {
-                    if (typeof a === 'object') return a.tasks.filter(t => t.completed).length + v.tasks.filter(t => t.completed).length; else return a + v.tasks.filter(t => t.completed).length
+
+                let completedTask = data.reduce((a, v) => {
+                    if (typeof a === 'object') return a.tasks.filter(t => t.completed).length + v.tasks.filter(t => t.completed).length;
+                    else return a + v.tasks.filter(t => t.completed).length
                 });
+
+                if (data.length === 1) {
+                    totalTask = data[0].tasks.length;
+                    completedTask = data[0].tasks.filter(t => t.completed).length
+                }
+
                 const progressBar = [];
                 data.forEach(challenge => {
                     let allTask = challenge.tasks.length;
@@ -73,7 +82,7 @@ router.delete('/deletechallenge/:id', (req, res) => {
         _id: req.params.id,
         userId: req.user.id
     })
-        .then(element => {res.redirect(`/challenges/task/${req.params.id}`)})
+        .then(element => { res.redirect(`/challenges/task/${req.params.id}`) })
         .catch(err => {
             console.error(err);
             res.status(500).json({ message: "Internal Server Error" })
@@ -83,10 +92,10 @@ router.delete('/deletechallenge/:id', (req, res) => {
 router.get('/task/:id', (req, res) => {
     Challenge.find({
         userId: req.user.id
-        // _id: req.params.id
-    }) //this will be req.user.id
+
+    })
         .then(allChallenges => {
-            challenge = allChallenges.find(c=> c._id.toString() === req.params.id)
+            challenge = allChallenges.find(c => c._id.toString() === req.params.id)
             let options = {
                 challenge: challenge,
                 allChallenges: allChallenges,
@@ -100,7 +109,7 @@ router.get('/task/:id', (req, res) => {
                 }
             })
         });
-    });
+});
 
 
 router.post('/addtask/:id', (req, res) => {
@@ -116,7 +125,8 @@ router.post('/addtask/:id', (req, res) => {
             }
         })
         .then(challenge => {
-            res.redirect(`/challenges/task/${req.params.id}`)})
+            res.redirect(`/challenges/task/${req.params.id}`)
+        })
         .catch(err => {
             console.error(err);
             res.status(500).json({ message: "Internal Server Error" })
@@ -130,15 +140,9 @@ router.delete('/deletetask/:id', (req, res) => {
         { 'tasks._id': deletetask }
         , { $pull: { tasks: { _id: deletetask } } }
     )
-        // .then(challenge => challenge.tasks.filter(x => x.id !== deletetask))
         .then(newArray => {
-                res.redirect(`/challenges/task/${req.params.id}`)
-            // Challenge.findOneAndUpdate(
-            //     {'tasks._id': deletetask}
-            //     ,{$set: {'tasks': newArray}}
-            // )
+            res.redirect(`/challenges/task/${req.params.id}`)
         })
-        //take this array and set the tasks to a new value
         .catch(err => {
             console.error(err);
             res.status(500).json({ message: "Internal Server Error" })
@@ -150,12 +154,10 @@ router.put('/completedTask/:id', (req, res) => {
     Challenge.findOneAndUpdate(
         { 'tasks._id': task },
         { $set: { 'tasks.$.completed': req.body.completed } },
-        // {arrayFilters:  }
     )
         .then(element => {
-            res.json(element)})
-        //Challenge.findOne({'tasks._id': task}) // Still working on this use db.getCollection('challenges').find({'tasks._id': ObjectId("5b9081f01421fa3e24ccd56e")})
-        //.then(element => console.log(element.tasks.filter(obj => obj._id === "5b9081f01421fa3e24ccd56e" )))
+            res.json(element)
+        })
         .catch(err => {
             console.error(err);
             res.status(500).json({ message: "Internal Server Error" })

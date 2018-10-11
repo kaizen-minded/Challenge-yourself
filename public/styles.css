@@ -33,6 +33,7 @@ header {
     top: 0;
     background-color: #13232f;
     width: 100%;
+    z-index: 999;
 }
 header:after, nav:after{
     content: '';

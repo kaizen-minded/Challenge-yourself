@@ -1,20 +1,20 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <%include ./partials/head %>
 </head>
 
 <body>
-    <header>
+    <header role="banner">
         <%include ./partials/header %>
     </header>
 
-    <main class="row no-padding">
-        <section class="col-12 intro-window">
+    <main class="row no-padding" role="main">
+        <section class="col-12 intro-window" role="content">
             <h1>Challenge Yourself</h1>
             <p>Difficulties strengthen the mind, as labor does the body, Seneca</p>
             <p>So go out there and... Challenge Yourself</p>
-            <form method="GET" action="/register">
+            <form method="GET" action="/register" role="form">
                 <button class="submit-button">Sign Up -It's Free</button>
             </form>
             

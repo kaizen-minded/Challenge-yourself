@@ -1,20 +1,20 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <%include ./partials/head %>
 </head>
 
 <body>
-    <header>
+    <header role="banner">
         <%include ./partials/header %>
     </header>
 
-    <div class="row">
-        <main class="col-12">
+    <main class="row" role="main">
+        <section class="col-12" role="content">
    
 
             <h1>Login to Challenge Yourself</h1>
-            <form action="/auth/login" method="POST" id="login-form">
+            <form action="/auth/login" method="POST" id="login-form" role="form">
                 <div>
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" placeholder="johnnybravo">
@@ -26,9 +26,9 @@
                 <button type="submit"  class="submit-button">Login</button>   
             </form>
 
-        </main>
+        </section>
 
-    </div>
+    </main>
     <%include ./partials/scripts %>
 </body>
 

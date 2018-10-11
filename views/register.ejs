@@ -1,20 +1,20 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <%include ./partials/head %>
 </head>
 
 <body>
-    <header>
+    <header role="banner">
         <%include ./partials/header %>
     </header>
 
-    <div class="row">
-        <main class="col-12">
+    <main class="row" role="content">
+        <section class="col-12" role="content">
    
 
             <h1>I'm Ready to Challenge Myself</h1>
-            <form action="#" method="POST">
+            <form action="/register" method="POST" id="register-form" role="form">
                 <div>
                     <label for="firstname">First Name</label>
                     <input type="text" id="firstname" name="firstName" placeholder="John" required>
@@ -38,10 +38,10 @@
                 <button type="submit" class="submit-button">Create New Account</button>   
             </form>
 
-        </main>
+        </section>
 
 
-    </div>
+    </main>
     <%include ./partials/scripts %>
 </body>
 

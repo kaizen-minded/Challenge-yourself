@@ -48,16 +48,39 @@ $(document).ready(function(){
     })
 
     $("#register-form").submit(function(e){
-        e.preventDefault();
-        fetch('/register', {
+        e.preventDefault(); 
+        fetch(`/register`, 
+        {
             method: 'POST',
-            body:
-
-        }
-           
-        )
-        login($('#username').val(), $('#password').val())
+            body: JSON.stringify({
+                username: $('#username').val(),
+                password: $('#password').val(),
+                email: $('#email').val(),
+                firstName: $('#firstname').val(),
+                lastName: $('#lastname').val()
+            }),
+            headers: {
+                "content-type": "application/json"
+            },
+            credentials: "same-origin"
+        })
+        .then(response => {
+            return window.location.href = `/login`;
+        })
     })
+    //     fetch('/register', {
+    //         method: 'POST',
+    //         body: JSON.stringify({
+    //             username: $('#username').val(),
+    //             password: $('#password').val()
+
+    //         })
+    //     })
+    //     .then()
+           
+    //     )
+    //     login($('#username').val(), $('#password').val())
+    // })
 })
 
 function login(user, password) {
