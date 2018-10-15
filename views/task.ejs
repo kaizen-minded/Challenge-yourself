@@ -9,7 +9,7 @@
     <header role="banner">
         <%include ./partials/header %>
     </header>
-    <main class="row" role="content">
+    <main class="row display-window" role="content">
         <section class="col-6" role="content">
             <h2>The Challenge is to
                 <%= challenge.name %>
@@ -30,30 +30,37 @@
                     <input type="date" id="task-deadline" name="deadline">
                 </div>
                 <input type="hidden" name="" id="">
-                <button type="submit">Submit</button>
+                <button type="submit" class="submit-button">Submit</button>
             </form>
 
             <div class="row">
                 <% if ( challenge.tasks.length >= 1) { %>
                 <% for( let i = 0; i < challenge.tasks.length; i++) { %>
-                <% if (challenge.tasks[i].completed) {
-                    checked = "checked"
-                } else { checked = ""} %>
                 <div class="card col-12">
-                    <h3>
-                        <%= challenge.tasks[i].name %>
-                    </h3>
-                    <h3>
-                        <%= challenge.tasks[i].start.toDateString() %>
-                    </h3>
-                    <h3>
-                        <%= challenge.tasks[i].deadline %>
-                    </h3>
-                    <input type="checkbox" <%=checked %> class="completed" data-id="
-                    <%= challenge.tasks[i]._id %>" data-completed="
-                    <%= !(challenge.tasks[i].completed) %>">Completed
-                    <button class="delete-task delete-button" tabindex="0" data-id="<%= challenge.tasks[i]._id %>"><i
-                            class="fas fa-trash-alt"> Delete</i></button>
+                    <div>
+                        <button class="delete-task delete-button" tabindex="0" data-id="<%= challenge.tasks[i]._id %>"><i
+                                class="fas fa-trash-alt"> Delete</i></button>
+                    </div>
+                    <div class="card-info">
+                        <h3>
+                            <%= challenge.tasks[i].name %>
+                        </h3>
+                        <p> Task will start on:
+                            <%= challenge.tasks[i].start.toDateString() %>
+                        </p>
+                        <p> Task is due on:
+                            <%= challenge.tasks[i].deadline.toDateString() %>
+                        </p>
+                        <input type="checkbox" <%=(challenge.tasks[i].completed) ? "checked" : "" %> class="completed"
+                        data-id="
+                        <%= challenge.tasks[i]._id %>"
+                        data-completed="
+                        <%= !(challenge.tasks[i].completed) %>">Completed
+
+
+                    </div>
+
+
                 </div>
 
                 <% } %>
@@ -62,19 +69,17 @@
                 <% } %>
         </section>
 
-
+        <aside class="col-6" role="complementary">
+            <h3>Your CHALLENGES:</h3>
+            <% for( let i = 0;  i < allChallenges.length; i++){ %>
+            <div class="card">
+                <a href="/challenges/task/<%=allChallenges[i]._id %>">
+                    <%= allChallenges[i].name %></a>
+                <button class="delete" data-id="<%=allChallenges[i]._id %>">Delete</button>
+            </div>
+            <% } %>
+        </aside>
     </main>
-    <aside class="col-6" role="complementary">
-        <h3>Your CHALLENGES:</h3>
-        <% for( let i = 0;  i < allChallenges.length; i++){ %>
-        <div>
-            <a href="/challenges/task/<%=allChallenges[i]._id %>">
-                <%= allChallenges[i].name %></a>
-            <button class="delete" data-id="<%=allChallenges[i]._id %>">Delete</button>
-        </div>
-        <% } %>
-    </aside>
-    </div>
     <%include ./partials/scripts %>
 </body>
 

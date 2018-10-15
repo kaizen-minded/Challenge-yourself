@@ -2,6 +2,7 @@ $(document).ready(function(){
     $(".completed").click(function(e){
         let taskComplete = $(e.currentTarget).data('completed');
         let taskId = $(e.currentTarget).data('id');
+        console.log({taskComplete});
         fetch(`/challenges/completedTask/${taskId}`, 
         {
             method: 'PUT',

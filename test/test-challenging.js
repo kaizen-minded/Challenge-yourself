@@ -38,8 +38,16 @@ describe('User API resource', function () {
         return runServer(TEST_DATABASE_URL);
     });
 
-    beforeEach(function (){
-        return generateUserData();
+    beforeEach(function (done){
+        // return generateUserData();
+        const newUser = generateUserData();
+
+        request(app)
+        .post('/register')
+        .type('form')
+        .send(newUser)
+        .expect(201)
+        .end(done)
     })
 
     afterEach(function () {

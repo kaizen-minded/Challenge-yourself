@@ -120,7 +120,9 @@ router.post('/addtask/:id', (req, res) => {
         {
             $push: {
                 tasks: {
-                    name: req.body.name
+                    name: req.body.name,
+                    startDate: req.body.startDate,
+                    deadline: req.body.deadline
                 }
             }
         })
