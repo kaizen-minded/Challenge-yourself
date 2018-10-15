@@ -1,6 +1,6 @@
 # Challenge Yourself
 
-You find can my app: https://kaizen-minded.github.io/YourPlaceOrMine/
+You find can my app: https://kaizen-minded.github.io/Challenge-yourself/
 
 ## Screenshots
 
