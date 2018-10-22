@@ -91,6 +91,7 @@ function login(user, password) {
                 return window.location.href = `/challenges/${data.id}`
             })
             .catch(err => {
+                $('#feedback').text('Wrong Username or Password');
                 console.error(err);
             })
 }
